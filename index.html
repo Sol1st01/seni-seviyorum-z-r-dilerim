@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sevgim ve Özlemim</title>
+  <meta name="description" content="Sana söylemek istediklerim." />
+  <style>
+    :root {
+      --ink: #fff7f4;
+      --muted: #d9b9b7;
+      --rose: #ff7f8f;
+      --rose-2: #ffb3b9;
+      --wine: #4a1625;
+      --deep: #160b18;
+      --card: rgba(255, 255, 255, .09);
+      --line: rgba(255, 255, 255, .15);
+      --shadow: 0 24px 70px rgba(0,0,0,.3);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255, 126, 143, .20), transparent 28rem),
+        radial-gradient(circle at 85% 50%, rgba(142, 74, 108, .23), transparent 30rem),
+        linear-gradient(145deg, #170b19 0%, #351327 52%, #190c20 100%);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+      z-index: 9;
+    }
+    .orb { position: fixed; border-radius: 50%; filter: blur(5px); pointer-events: none; z-index: 0; }
+    .orb.one { width: 18rem; height: 18rem; background: rgba(255, 127, 143, .12); left: -9rem; top: 24%; animation: drift 15s ease-in-out infinite; }
+    .orb.two { width: 24rem; height: 24rem; background: rgba(216, 104, 150, .09); right: -13rem; top: 62%; animation: drift 20s ease-in-out infinite reverse; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: 0 auto; position: relative; z-index: 1; }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 27px 0; color: var(--rose-2); letter-spacing: .08em; font-size: .77rem;
+      text-transform: uppercase;
+    }
+    .brand { display: flex; gap: 10px; align-items: center; font-weight: bold; }
+    .mini-heart { color: var(--rose); font-size: 1.25rem; animation: heartbeat 1.8s infinite; }
+    .nav-link { color: var(--muted); text-decoration: none; transition: color .2s; }
+    .nav-link:hover { color: white; }
+    .hero { min-height: 92vh; display: grid; place-items: center; text-align: center; padding: 5rem 0 8rem; }
+    .eyebrow { color: var(--rose-2); text-transform: uppercase; letter-spacing: .24em; font-size: .72rem; margin-bottom: 2rem; }
+    h1 { font-size: clamp(4rem, 13vw, 10rem); line-height: .82; font-weight: 400; margin: 0; letter-spacing: -.08em; }
+    h1 em { display: block; color: var(--rose-2); font-size: .47em; letter-spacing: -.04em; margin: .35em 0; }
+    .hero-copy { max-width: 590px; margin: 2.1rem auto 0; font-size: clamp(1.15rem, 2.5vw, 1.45rem); line-height: 1.65; color: var(--muted); }
+    .scroll-cue { display: inline-flex; margin-top: 3.8rem; align-items: center; gap: 13px; color: var(--rose-2); text-decoration: none; font-size: .85rem; }
+    .scroll-cue span { display: inline-block; width: 1px; height: 52px; background: var(--rose); animation: pulse-line 1.7s infinite; }
+    section { padding: 8rem 0; }
+    .section-head { max-width: 650px; margin-bottom: 3rem; }
+    .kicker { color: var(--rose); text-transform: uppercase; letter-spacing: .2em; font-size: .7rem; }
+    h2 { margin: .7rem 0 1.2rem; font-size: clamp(2.3rem, 5vw, 4.8rem); line-height: .98; font-weight: 400; letter-spacing: -.055em; }
+    .lead { color: var(--muted); font-size: 1.16rem; line-height: 1.75; max-width: 630px; }
+    .letter { position: relative; padding: clamp(2rem, 6vw, 5rem); background: rgba(255,255,255,.08); border: 1px solid var(--line); border-radius: 3px 42px 3px 42px; box-shadow: var(--shadow); overflow: hidden; }
+    .letter::after { content: "♡"; position: absolute; right: 4%; bottom: -12%; font-size: 17rem; color: rgba(255, 179, 185, .07); line-height: 1; transform: rotate(-14deg); }
+    .letter p { position: relative; z-index: 1; font-size: clamp(1.15rem, 2.3vw, 1.5rem); line-height: 1.85; color: #ffe8e3; max-width: 790px; margin: 0 0 1.5rem; }
+    .letter p:last-child { margin-bottom: 0; }
+    .signature { color: var(--rose-2); font-style: italic; margin-top: 2.5rem !important; }
+    .reasons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .reason { padding: 2rem 1.6rem; border: 1px solid var(--line); background: var(--card); min-height: 230px; transition: transform .35s, background .35s; }
+    .reason:hover { transform: translateY(-10px) rotate(-1deg); background: rgba(255,255,255,.13); }
+    .reason .icon { font-size: 2rem; color: var(--rose); }
+    .reason h3 { font-size: 1.35rem; font-weight: 400; margin: 1.5rem 0 .7rem; }
+    .reason p { color: var(--muted); line-height: 1.65; margin: 0; }
+    .promise-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 4rem; align-items: center; }
+    .promise-list { border-top: 1px solid var(--line); }
+    .promise { display: grid; grid-template-columns: 54px 1fr; gap: 20px; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
+    .promise-num { color: var(--rose); font-size: 1.4rem; }
+    .promise h3 { margin: 0 0 .45rem; font-size: 1.2rem; font-weight: 400; }
+    .promise p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .memories { background: rgba(0,0,0,.13); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); }
+    .upload-box { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; padding: 1.4rem; border: 1px dashed rgba(255,179,185,.5); background: rgba(255,255,255,.045); }
+    input[type=file] { display: none; }
+    .upload-label { cursor: pointer; display: inline-flex; align-items: center; gap: .7rem; color: var(--deep); background: var(--rose-2); padding: .85rem 1.1rem; font-family: inherit; font-weight: bold; transition: transform .2s, background .2s; }
+    .upload-label:hover { transform: translateY(-2px); background: white; }
+    .upload-hint { color: var(--muted); font-size: .92rem; }
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+    .photo { min-height: 250px; border: 1px solid var(--line); display: grid; place-items: center; background: linear-gradient(135deg, rgba(255,127,143,.17), rgba(255,255,255,.04)); overflow: hidden; position: relative; }
+    .photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .photo span { color: var(--muted); font-size: .9rem; text-align: center; padding: 1.5rem; }
+    .final { text-align: center; padding: 10rem 0 12rem; }
+    .final h2 { max-width: 770px; margin: .8rem auto 1.3rem; }
+    .final .lead { margin: 0 auto 2.8rem; }
+    .actions { min-height: 75px; display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; position: relative; }
+    button { border: 0; font: inherit; cursor: pointer; }
+    .yes { background: var(--rose-2); color: var(--deep); padding: 1rem 2.5rem; font-weight: bold; font-size: 1.08rem; box-shadow: 0 10px 30px rgba(255,127,143,.2); transition: transform .25s, box-shadow .25s; }
+    .yes:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 38px rgba(255,127,143,.35); }
+    .no { position: relative; background: transparent; border: 1px solid var(--line); color: var(--muted); padding: .9rem 1.4rem; transition: left .25s, top .25s; }
+    .no.respect { cursor: default; border-color: rgba(255,179,185,.35); color: #b9979b; }
+    footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: .84rem; text-align: center; }
+    .modal { position: fixed; inset: 0; background: rgba(12,5,14,.78); backdrop-filter: blur(12px); display: grid; place-items: center; padding: 1.3rem; z-index: 20; opacity: 0; pointer-events: none; transition: opacity .35s; }
+    .modal.open { opacity: 1; pointer-events: auto; }
+    .modal-card { max-width: 580px; text-align: center; padding: 3.5rem 2rem; background: linear-gradient(145deg, #4c1829, #241023); border: 1px solid rgba(255,179,185,.35); box-shadow: var(--shadow); transform: translateY(18px); transition: transform .35s; }
+    .modal.open .modal-card { transform: translateY(0); }
+    .modal-heart { font-size: 3rem; animation: heartbeat 1.4s infinite; }
+    .modal h3 { font-size: 2.5rem; font-weight: 400; margin: 1rem 0; }
+    .modal p { color: var(--muted); line-height: 1.7; margin: 0 auto 1.7rem; }
+    .close { color: var(--rose-2); background: transparent; padding: .7rem 1rem; border: 1px solid var(--line); }
+    .toast { position: fixed; left: 50%; bottom: 25px; transform: translate(-50%, 20px); background: #ffe1dc; color: var(--deep); padding: .9rem 1.2rem; font-family: Arial, sans-serif; font-size: .9rem; opacity: 0; pointer-events: none; transition: all .3s; z-index: 30; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @keyframes heartbeat { 0%, 35%, 100% { transform: scale(1); } 15% { transform: scale(1.17); } 25% { transform: scale(1.05); } }
+    @keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-22px); } }
+    @keyframes pulse-line { 0%,100% { opacity: .35; transform: scaleY(.7); transform-origin: top; } 50% { opacity: 1; transform: scaleY(1); } }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 28px, 600px); }
+      nav { padding-top: 20px; }
+      .nav-link { display: none; }
+      .hero { min-height: 86vh; padding: 4rem 0 6rem; }
+      section { padding: 5.5rem 0; }
+      .reasons, .gallery, .promise-grid { grid-template-columns: 1fr; }
+      .promise-grid { gap: 2.5rem; }
+      .photo { min-height: 180px; }
+      .final { padding: 7rem 0 8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb one"></div><div class="orb two"></div>
+  <header class="wrap">
+    <nav>
+      <div class="brand"><span class="mini-heart">♥</span> Sevgim ve Özlemim</div>
+      <a class="nav-link" href="#mektup">Sana söylemek istediklerim ↓</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero wrap">
+      <div>
+        <div class="eyebrow">Bunu içimde tutamadım</div>
+        <h1>Sevgim <em>ve</em> Özlemim</h1>
+        <p class="hero-copy">Bazı insanlar hayatımıza girmez; hayatımızın anlamını değiştirir. Sen benim için hep öyle oldun.</p>
+        <a class="scroll-cue" href="#mektup"><span></span> birlikte okuyalım</a>
+      </div>
+    </section>
+    <section id="mektup" class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Sana bir mektup</div>
+        <h2>Bu kez savunmadan, sadece kalbimle.</h2>
+      </div>
+      <article class="letter reveal">
+        <p>Öncelikle şunu bilmeni istiyorum: Haklı olduğun yerleri şimdi daha net görüyorum. Seni önemsediğimi ve sana değer verdiğimi hissettiremediğim anlar oldu. Söylediklerimle yaptıklarım arasındaki farkın seni ne kadar yorduğunu ancak şimdi gerçekten anlayabiliyorum.</p>
+        <p>Seni sevdiğimi söylemek kolaydı; ama sevginin davranışlarla, dikkatle, sabırla ve emekle gösterilmesi gerektiğini öğrenmem gerekiyordu. Sen bunu hak ediyordun. Ben ise bazı zamanlarda bunu sana hissettiremedim. Bunun sorumluluğunu alıyorum.</p>
+        <p>Seni ikna etmek için değil, içimde kalan gerçeği dürüstçe paylaşmak için buradayım: Seni özlüyorum. Sesini, gülüşünü, birlikte sıradan bir günü bile özel yapan o hâlimizi özlüyorum. Eğer bir şans verirsen, aynı hataları tekrarlamamak için sadece söz değil, istikrarlı bir emek göstermek istiyorum.</p>
+        <p>Geçmişi silemeyeceğimi biliyorum. Ama bundan sonrasını daha dikkatli, daha açık ve daha sevgi dolu kurabilirim. Bunu tek başıma karar vererek değil, senin sınırlarına ve hislerine saygı duyarak yapmak istiyorum.</p>
+        <p class="signature">Seni hâlâ çok seven,<br>Velican</p>
+      </article>
+    </section>
+    <section class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Çünkü sen</div>
+        <h2>Benim için bir “geçmiş” değilsin.</h2>
+        <p class="lead">Bana kattığın şeyleri, birlikte büyüdüğümüz anları ve sende bulduğum huzuru hâlâ taşıyorum.</p>
+      </div>
+      <div class="reasons reveal">
+        <div class="reason"><div class="icon">✦</div><h3>Özel hissettiriyorsun</h3><p>Yanında kendim olabildiğim, en küçük anların bile anlam kazandığı o duyguyu unutmadım.</p></div>
+        <div class="reason"><div class="icon">♡</div><h3>Değerini biliyorum</h3><p>Varlığının hayatımdaki yerini bazen sana göstermekte geç kaldım. Şimdi bunu saklamadan söylüyorum.</p></div>
+        <div class="reason"><div class="icon">∞</div><h3>Emek vermek istiyorum</h3><p>Bir başlangıç daha olursa, onu güzel yapan şeyin sözler değil, her gün seçilen davranışlar olduğunu biliyorum.</p></div>
+      </div>
+    </section>
+    <section class="wrap">
+      <div class="promise-grid">
+        <div class="section-head reveal">
+          <div class="kicker">Sadece söz değil</div>
+          <h2>Bu kez neyi farklı yapacağım?</h2>
+          <p class="lead">Senden mükemmel olmamı beklemeni istemiyorum. Sadece gerçekten çabaladığımı görmeni istiyorum.</p>
+        </div>
+        <div class="promise-list reveal">
+          <div class="promise"><div class="promise-num">01</div><div><h3>Daha çok dinleyeceğim</h3><p>Hislerini küçümsemeden, kendimi savunmaya geçmeden seni anlamaya çalışacağım.</p></div></div>
+          <div class="promise"><div class="promise-num">02</div><div><h3>Sevgimi göstereceğim</h3><p>Sevginin sadece aklımda değil, davranışlarımda ve sana ayırdığım zamanda da görünmesini sağlayacağım.</p></div></div>
+          <div class="promise"><div class="promise-num">03</div><div><h3>Güveni yeniden kuracağım</h3><p>Bir anda her şeyin düzelmesini beklemeyeceğim. Sabırla ve tutarlılıkla yanında olacağım.</p></div></div>
+          <div class="promise"><div class="promise-num">04</div><div><h3>Sınırlarına saygı duyacağım</h3><p>Cevabın ne olursa olsun seni zorlamayacağım. Senin huzurun da benim için önemli.</p></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="memories">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">Bizden kalan güzel şeyler</div>
+          <h2>İstersen anılarımızı da ekleyelim.</h2>
+          <p class="lead">Aşağıdaki alana birkaç fotoğraf bırakabilirsin. Fotoğraflar sadece bu tarayıcıda görünür; hiçbir yere yüklenmez.</p>
+        </div>
+        <div class="upload-box reveal">
+          <label class="upload-label" for="photos">＋ Fotoğraf ekle</label>
+          <input id="photos" type="file" accept="image/*" multiple />
+          <span class="upload-hint">En fazla 6 fotoğraf seçebilirsin.</span>
+        </div>
+        <div class="gallery reveal" id="gallery">
+          <div class="photo"><img src="attached_assets/58270a7f-9794-4ef0-9cd0-5268a636346a_1790064488356.jpeg" alt="Birlikte güzel bir anımız"></div>
+          <div class="photo"><img src="attached_assets/fe67ef58-d17b-4346-934e-f03428cf284f_1790064488356.jpeg" alt="Birlikte güzel bir anımız"></div>
+          <div class="photo"><img src="attached_assets/a9ed1d20-8099-452f-accf-334e894cac49_1790064488356.jpeg" alt="Birlikte güzel bir anımız"></div>
+          <div class="photo"><img src="attached_assets/1c2d83bc-6f82-473a-b84c-99e4a24eda6a_1790064488356.jpeg" alt="Birlikte güzel bir anımız"></div>
+          <div class="photo"><img src="attached_assets/IMG_2789_1790064488356.jpeg" alt="Birlikte güzel bir anımız"></div>
+          <div class="photo"><img src="attached_assets/IMG_0661_1790064488356.jpeg" alt="Birlikte güzel bir anımız"></div>
+        </div>
+      </div>
+    </section>
+    <section class="final wrap">
+      <div class="kicker reveal">Son bir soru</div>
+      <h2 class="reveal">Benimle tekrar başlamaya var mısın?</h2>
+      <p class="lead reveal">Cevabın ne olursa olsun, bu sayfayı sonuna kadar okuduğun için teşekkür ederim. Seni zorlamak değil, içimdeki sevgiyi dürüstçe anlatmak istedim.</p>
+      <div class="actions reveal" id="actions">
+        <button class="yes" id="yesButton">Evet, yeniden deneyelim ♥</button>
+        <button class="no" id="noButton">Şimdilik hayır</button>
+      </div>
+    </section>
+  </main>
+  <footer>Bu sayfa, içimde kalanları sana özenle anlatmak için hazırlandı. <span class="mini-heart">♥</span></footer>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-heart">♥</div>
+      <h3 id="modalTitle">Bu mesaj kalbime ulaştı.</h3>
+      <p>“Evet” cevabını seçtiğinde sana ulaşabilmem için e-posta uygulaman açılacak. Mesajı göndermen yeterli; gerisini birlikte, acele etmeden konuşuruz.</p>
+      <button class="close" id="mailButton">Velican'a haber ver</button>
+      <button class="close" id="closeButton" style="margin-left: .5rem;">Kapat</button>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add("visible"); });
+    }, { threshold: .12 });
+    document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+    const photoInput = document.getElementById("photos");
+    const gallery = document.getElementById("gallery");
+    photoInput.addEventListener("change", (event) => {
+      const files = Array.from(event.target.files).slice(0, 6);
+      if (!files.length) return;
+      gallery.innerHTML = "";
+      files.forEach((file) => {
+        const frame = document.createElement("div");
+        frame.className = "photo";
+        const img = document.createElement("img");
+        img.alt = "Birlikte güzel bir anı";
+        img.src = URL.createObjectURL(file);
+        frame.appendChild(img);
+        gallery.appendChild(frame);
+      });
+      showToast(files.length + " fotoğraf bu sayfaya eklendi.");
+    });
+    const modal = document.getElementById("modal");
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const mailButton = document.getElementById("mailButton");
+    const closeButton = document.getElementById("closeButton");
+    let noMoves = 0;
+    yesButton.addEventListener("click", () => modal.classList.add("open"));
+    closeButton.addEventListener("click", () => modal.classList.remove("open"));
+    modal.addEventListener("click", (event) => { if (event.target === modal) modal.classList.remove("open"); });
+    mailButton.addEventListener("click", () => {
+      const subject = encodeURIComponent("Yeniden başlayalım mı?");
+      const body = encodeURIComponent("Evet. Sayfanı okudum ve yeniden konuşmaya hazırım. ♥");
+      window.location.href = "mailto:velicanaydogmu@gmail.com?subject=" + subject + "&body=" + body;
+    });
+    noButton.addEventListener("mouseenter", () => {
+      if (noMoves >= 3) return;
+      const parent = document.getElementById("actions").getBoundingClientRect();
+      const button = noButton.getBoundingClientRect();
+      const maxX = Math.max(20, parent.width - button.width - 20);
+      noButton.style.position = "absolute";
+      noButton.style.left = Math.floor(Math.random() * maxX) + "px";
+      noButton.style.top = (Math.floor(Math.random() * 42) - 21) + "px";
+      noMoves++;
+      if (noMoves === 3) {
+        noButton.remove();
+      }
+    });
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+  </script>
+</body>
+</html>
